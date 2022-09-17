@@ -2,7 +2,7 @@
 FROM ubuntu:18.04
 
 # LABEL about the custom image
-LABEL maintainer="Gabu Siddharth"
+LABEL maintainer="Karan Sharma"
 LABEL version="0.1"
 LABEL description="This is custom Docker Image for the Online Compiler."
 
@@ -71,7 +71,3 @@ RUN rm /var/www/html/index.html
 
 #Start services
 CMD ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
-
-
-
-
