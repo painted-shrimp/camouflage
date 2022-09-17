@@ -1,29 +1,30 @@
-FROM ubuntu:18.04
+# Build stage
 
-RUN dpkg --configure -a
+FROM maven:3.6.0 AS BUILD_STAGE
+WORKDIR /compiler
+COPY . .
+RUN ["mvn", "clean", "install", "-Dmaven.test.skip=true"]
 
-ENV PYTHON_VERSION 3.7.7
-ENV PYTHON_PIP_VERSION 20.1
-ENV DEBIAN_FRONTEND noninteractive
+# Run stage
+FROM openjdk:11.0.6-jre-slim
+WORKDIR /compiler
 
-RUN apt-get update
-RUN apt-get -y install gcc mono-mcs golang-go \
-    default-jre default-jdk nodejs npm \
-    python3-pip python3 curl && \
-    rm -rf /var/lib/apt/lists/*
+USER root
 
-ENV NODE_VERSION=16.13.2
-RUN curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-ENV NVM_DIR=/root/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
-# RUN nvm install 16.13.2
+COPY --from=BUILD_STAGE /compiler/target/*.jar compiler.jar
 
-COPY . /app
-WORKDIR /app
-RUN npm install
+RUN apt update && apt install -y docker.io
+    
+ADD executions executions
 
-EXPOSE 3000
-CMD ["npm", "start"]
+ADD entrypoint.sh entrypoint.sh
+
+RUN chmod a+x ./entrypoint.sh
+
+EXPOSE 8082
+
+ENTRYPOINT ["./entrypoint.sh"]
+
+
+# Build image by typing the following command : "docker image build . -t onlinecompiler"
+# Run the container by typing the following command : "docker container run -p 8080:8082 -v /var/run/docker.sock:/var/run/docker.sock -t onlinecompiler"
