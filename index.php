@@ -2,9 +2,9 @@
 <html lang="en-IN" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Online Compiler - Collegeek</title>
-    <meta name="author" content="SidPro">
-    <meta name="description" content="Online C,C++,JAVA,Python,Javascript compiler: you can write your code and run cheers!">
+    <title>Camouflage Compiler</title>
+    <meta name="author" content="Tech Phantoms">
+    <meta name="description" content="Online C, C++, Java, Python, Javascript compiler.">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
