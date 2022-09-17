@@ -17,7 +17,7 @@
   <body onload="ready()">
     <div class="container">
       <h1>Camouflage Compiler</h1>
-      <h2>For all your compilation needs.</h2> <!--  -->
+      <h2 color = "white">For all your compilation needs.</h2> <!--  -->
       <button title="Upload File" onclick="upload()" class="download-btn"><i class="fas fa-file-upload"></i></button>
       <button title="Download Code" onclick="download()" class="download-btn"><i class="fa fa-download"></i></button>
       <div class="semicontainer">
@@ -59,5 +59,6 @@
         <pre id="process"></pre>
         <pre id="output"></pre>
     </div>
+    <p style="font-size: 19px; font-weight: 600; padding-bottom: 45px; color:aliceblue;" class="text-center align-bottom mb-4">Developed by Team Tech Phantoms, led by <b>Karan Sharma</b>  and sustained by <b>Aditi Pareek</b>.</p>
   </body>
 </html>
