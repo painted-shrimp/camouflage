@@ -64,6 +64,9 @@ h2{
   margin-bottom: 15px;
   color: #ffffff;
 }
+p{
+  color: #ffffff;
+}
 /* Upload & Download */
 
 .download-btn{
