@@ -1,107 +1,26 @@
-# CodeX API
+# [CodeX](https://codex.jaagrav.in)
 
-> This API is still in very early stages of development. So consider not using the API in production.
+CodeX is an online compiler for various languages like Java, C++, Python, etc.
 
-### Introducing the new CodeX API
+[![CodeX Editor](https://dev-to-uploads.s3.amazonaws.com/i/6f0l70d73sf7m7razxmt.png)](https://codex.jaagrav.in)
 
-Here's how you can execute code in various languages on your own website for free (no, there's no fucking catch, it's literally free),
+CodeX has a simple UI in order to store all your codes written in various languages easily at one place.
 
-### Execute Code and fetch output
+[![CodeX Home](https://dev-to-uploads.s3.amazonaws.com/i/07a4naxeav1uunz9b8ne.png)](https://codex.jaagrav.in)
 
-#### `POST` /
+You can share the codes' links that you write with your friends without being worried about them making any changes.
+CodeX stores all your code details on your device, which means every code that you write will only be editable on the
+device where you write you code in. Every Code shares a key that only your device and CodeX's backend know, so don't
+fear about others making any changes. Although there are ways to hack into others code and make changes but that's for
+you to find out. Once you find it out simply create an issue reporting the bug.
 
-This endpoint allows you to execute your script and fetch output results.
+No need to Sign In / Sign Up in order to execute and save your code. Every code automatically saves and updates in realtime
+so don't worry about losing it. It will always live in your computer unless you decide to clear your cache.
 
-### What are the Input Parameters for execute api call?
+## Something special for other developers
 
-| Parameter  | Description                                                                                                                   |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| "code"     | Should contain the script that needs to be executed                                                                           |
-| "language" | Language that the script is written in for example: java, cpp, etc. (Check language as a payload down below in next question) |
-| "input"    | In case the script requires any kind of input for execution, leave empty if no input required                                 |
+### Introducing the CodeX API,
 
-### What are the languages that are supported for execution?
-
-Whichever language you might mention in the language field, it would be automatically executed with the latest version of it's compiler.
-| Languages | Language as a payload |
-|-----------|-----------------------|
-| Java | java |
-| Python | py |
-| C++ | cpp |
-| C | c |
-| GoLang | go |
-| C# | cs |
-| NodeJS | js |
-
-More coming very soon!
-
-### NodeJS Example to Execute API Call?
-
-```js
-var axios = require("axios");
-var qs = require("qs");
-var data = qs.stringify({
-  code: "import java.util.Scanner;\npublic class MatSym {\n    public static void main(String[]args) {\n       Scanner in = new Scanner(System.in);\nSystem.out.println(in.nextLine());\nSystem.out.println(in.nextLine());\n    }\n}",
-  language: "java",
-  input: "Hello\nWorld",
-});
-var config = {
-  method: "post",
-  url: "https://codex-api.herokuapp.com/",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
-  data: data,
-};
-
-axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-```
-
-### Sample Output
-
-The output is a JSON object comprising only one parameter that is the output.
-
-```json
-{
-  "success": true,
-  "timestamp": "2022-05-26T19:59:08.014Z",
-  "output": "Hello\nWorld\n",
-  "language": "java",
-  "version": "11.0.15"
-}
-```
-
-> Since a lot of people had issues with executing the previous API from backend or serverless function, unlike the previous version of the API, this version of the API won't throw any Cross Origin errors so you can use this from the front end without any worries. Thank me later ;)
-
-#### `GET` /list
-
-This endpoint allows you to list all languages supported and their versions.
-
-```json
-[
-  {
-    "language": "java",
-    "compilerVersion": "11.0.15"
-  },
-  {
-    "language": "cpp",
-    "compilerVersion": "11.2.0"
-  },
-  {
-    "language": "py",
-    "compilerVersion": "3.7.7"
-  },
-  {
-    "language": "c",
-    "compilerVersion": "11.2.0"
-  }
-]
-```
+Checkout the API documentation to compile languages like C++, Java, Python, etc. online from the front-end for **FREE!** Hosted on Heroku, learn more about the usage and how the API works on [CodeX-API Github Page](https://github.com/Jaagrav/CodeX-API).
 
 Happy hacking!
