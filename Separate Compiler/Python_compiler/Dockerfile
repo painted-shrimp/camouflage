@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 
 # LABEL about the custom image
 LABEL maintainer="Gabu Siddharth"
-LABEL version="0.1"
+LABEL version="1.1"
 LABEL description="This is custom Docker Image for the Online Compiler."
 
 #Install tzdata and set timezone.
@@ -11,15 +11,6 @@ LABEL description="This is custom Docker Image for the Online Compiler."
 #we need to use -y flag otherwise it will ask for yes/no?
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && apt-get install -y software-properties-common
 
-#Install C/C++ Compiler
-RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
-RUN apt-get update -y && apt-get install -y gcc g++
-
-# Install OpenJDK
-RUN apt-get update && apt-get install -y apt-utils && apt-get install -y curl
-RUN mkdir -p /usr/share/man/man1/
-RUN apt-get update -y
-RUN apt-get install -y default-jdk
 
 #Install apache2 and PHP
 RUN apt-get update  
@@ -33,11 +24,6 @@ RUN apt-get update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive apt-g
 # Enable apache mods.
 RUN a2enmod php7.4
 RUN a2enmod rewrite
-
-#Install Node.js 
-RUN apt-get update -y
-RUN apt-get install -y nodejs
-RUN apt-get install -y npm
 
 #Remove any unnecessary files
 RUN apt-get clean
@@ -58,20 +44,24 @@ ENV APACHE_LOG_DIR /var/log/apache2
 ENV APACHE_LOCK_DIR /var/lock/apache2
 
 #Expose ports
-EXPOSE 80
+#EXPOSE 80
 
 #Change Permission
 RUN chmod -R 777 /var/www/html/
+RUN chmod -R 777 /usr/local/bin/
 
 #Copy files to webserver 
-COPY editor /var/www/html/
+COPY 'Python_compiler' /var/www/html/
+COPY 'run-apache2.sh' /usr/local/bin/
 
 # Remove Default index.html
 RUN rm /var/www/html/index.html
 
-#Start services
-CMD ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
+#Start services for heroku
+CMD ["run-apache2.sh"]
 
+#Start services for local
+#CMD ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
 
 
 

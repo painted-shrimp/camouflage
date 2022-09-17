@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 
 # LABEL about the custom image
 LABEL maintainer="Gabu Siddharth"
-LABEL version="0.1"
+LABEL version="1.1"
 LABEL description="This is custom Docker Image for the Online Compiler."
 
 #Install tzdata and set timezone.
@@ -14,12 +14,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata &
 #Install C/C++ Compiler
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
 RUN apt-get update -y && apt-get install -y gcc g++
-
-# Install OpenJDK
-RUN apt-get update && apt-get install -y apt-utils && apt-get install -y curl
-RUN mkdir -p /usr/share/man/man1/
-RUN apt-get update -y
-RUN apt-get install -y default-jdk
 
 #Install apache2 and PHP
 RUN apt-get update  
@@ -34,20 +28,8 @@ RUN apt-get update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive apt-g
 RUN a2enmod php7.4
 RUN a2enmod rewrite
 
-#Install Node.js 
-RUN apt-get update -y
-RUN apt-get install -y nodejs
-RUN apt-get install -y npm
-
 #Remove any unnecessary files
 RUN apt-get clean
-
-#install python3.8
-RUN apt-get update -y
-RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update -y
-RUN apt-get install -y python3.8
-RUN apt-get update -y
 
 #Setup Apache2 servers                                               
 #Debian configuration requires the environment variables APACHE_RUN_USER, APACHE_RUN_GROUP, and APACHE_PID_FILE to be set
@@ -57,20 +39,25 @@ ENV APACHE_PID_FILE /var/run/apache2.pid
 ENV APACHE_LOG_DIR /var/log/apache2
 ENV APACHE_LOCK_DIR /var/lock/apache2
 
-#Expose ports
-EXPOSE 80
+#Expose ports for local not for heroku
+#EXPOSE 80
 
 #Change Permission
 RUN chmod -R 777 /var/www/html/
+RUN chmod -R 777 /usr/local/bin/
 
 #Copy files to webserver 
-COPY editor /var/www/html/
+COPY 'C_compiler' /var/www/html/
+COPY 'run-apache2.sh' /usr/local/bin/
 
 # Remove Default index.html
 RUN rm /var/www/html/index.html
 
 #Start services
-CMD ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
+CMD ["run-apache2.sh"]
+
+#Start services for local
+#CMD ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
 
 
 
