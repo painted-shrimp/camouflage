@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="css/compiler.css">
     <!-- icons -->
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-config" content="css/icons/browserconfig.xml">
     <link rel="manifest" href="css/icons/manifest.json">
     <!-- icons -->
   </head>
